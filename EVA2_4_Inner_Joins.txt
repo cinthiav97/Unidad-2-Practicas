@@ -1,0 +1,126 @@
+MySQL Shell 8.0.12
+
+Copyright (c) 2016, 2018, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type '\help' or '\?' for help; '\quit' to exit.
+
+
+ MySQL  JS > \sql
+Switching to SQL mode... Commands end with ;
+
+ MySQL  SQL > \connect -c root@localhost
+The -c option is deprecated, please use --mysql or -mc instead
+Creating a Classic session to 'root@localhost'
+Please provide the password for 'root@localhost': ****
+Save password for 'root@localhost:3306'? [Y]es/[N]o/Ne[v]er (default No): Y
+Fetching schema names for autocompletion... Press ^C to stop.
+Your MySQL connection id is 7
+Server version: 5.5.61 MySQL Community Server (GPL)
+No default schema selected; type \use <schema> to set one.
+
+ MySQL  localhost:3306  SQL > \use northwind
+Default schema set to `northwind`.
+Fetching table and column names from `northwind` for auto-completion... Press ^C to stop.
+
+ MySQL  localhost:3306  northwind  SQL > show tables;
++----------------------+
+| Tables_in_northwind  |
++----------------------+
+| account              |
+| categories           |
+| customercustomerdemo |
+| customerdemographics |
+| customers            |
+| empleados            |
+| employees            |
+| employeeterritories  |
+| lista_empleados      |
+| lista_empleados_a    |
+| mi_rfc               |
+| nombre_cliente       |
+| orderdetails         |
+| orders               |
+| pagos_empleados      |
+| personas             |
+| products             |
+| prueba2              |
+| region               |
+| rfc_gringos          |
+| shippers             |
+| suppliers            |
+| territories          |
+| ventas_producto      |
++----------------------+
+24 rows in set (0.0006 sec)
+
+ MySQL  localhost:3306  northwind  SQL > desc orderdetails;
++-----------+---------------+------+-----+---------+-------+
+| Field     | Type          | Null | Key | Default | Extra |
++-----------+---------------+------+-----+---------+-------+
+| OrderID   | int(11)       | NO   | PRI | NULL    |       |
+| ProductID | int(11)       | NO   | PRI | NULL    |       |
+| UnitPrice | decimal(10,4) | NO   |     | 0.0000  |       |
+| Quantity  | smallint(2)   | NO   |     | 1       |       |
+| Discount  | double(8,0)   | NO   |     | 0       |       |
++-----------+---------------+------+-----+---------+-------+
+5 rows in set (0.0048 sec)
+
+ MySQL  localhost:3306  northwind  SQL > select a.orderid, b.productname,a.unitprice,a.quantity, (a.unitprice*a.quantity) as subtotal from orderdetails a inner join products b on a.productid=b.productid limit 20;
++---------+--------------+-----------+----------+-----------+
+| orderid | productname  | unitprice | quantity | subtotal  |
++---------+--------------+-----------+----------+-----------+
+|   10265 | Alice Mutton |   31.2000 |       30 |  936.0000 |
+|   10279 | Alice Mutton |   31.2000 |       15 |  468.0000 |
+|   10294 | Alice Mutton |   31.2000 |       15 |  468.0000 |
+|   10302 | Alice Mutton |   31.2000 |       40 | 1248.0000 |
+|   10319 | Alice Mutton |   31.2000 |        8 |  249.6000 |
+|   10338 | Alice Mutton |   31.2000 |       20 |  624.0000 |
+|   10339 | Alice Mutton |   31.2000 |       70 | 2184.0000 |
+|   10346 | Alice Mutton |   31.2000 |       36 | 1123.2000 |
+|   10415 | Alice Mutton |   31.2000 |        2 |   62.4000 |
+|   10430 | Alice Mutton |   31.2000 |       45 | 1404.0000 |
+|   10431 | Alice Mutton |   31.2000 |       50 | 1560.0000 |
+|   10444 | Alice Mutton |   31.2000 |       10 |  312.0000 |
+|   10523 | Alice Mutton |   39.0000 |       25 |  975.0000 |
+|   10530 | Alice Mutton |   39.0000 |       40 | 1560.0000 |
+|   10550 | Alice Mutton |   39.0000 |        8 |  312.0000 |
+|   10564 | Alice Mutton |   39.0000 |       16 |  624.0000 |
+|   10573 | Alice Mutton |   39.0000 |       18 |  702.0000 |
+|   10607 | Alice Mutton |   39.0000 |      100 | 3900.0000 |
+|   10686 | Alice Mutton |   39.0000 |       30 | 1170.0000 |
+|   10696 | Alice Mutton |   39.0000 |       20 |  780.0000 |
++---------+--------------+-----------+----------+-----------+
+20 rows in set (0.0005 sec)
+
+ MySQL  localhost:3306  northwind  SQL >  MySQL  localhost:3306  northwind  SQL > select a.orderid, b.productname,a.unitprice,a.quantity, (a.unitprice*a.quantity) as subtotal,c.categoryname,d.companyname from orderdetails a inner join products b on a.productid=b.productid inner join categories c on b.categoryid=c.categoryid inner join suppliers d on b.supplierid=d.supplierid limit 20;
++---------+--------------+-----------+----------+------------+--------------+---------------------------+
+| orderid | productname  | unitprice | quantity | subtotal   | categoryname | companyname               |
++---------+--------------+-----------+----------+------------+--------------+---------------------------+
+|   10329 | Cte de Blaye |  210.8000 |       20 |  4216.0000 | Beverages    | Aux joyeux ecclsiastiques |
+|   10351 | Cte de Blaye |  210.8000 |       20 |  4216.0000 | Beverages    | Aux joyeux ecclsiastiques |
+|   10353 | Cte de Blaye |  210.8000 |       50 | 10540.0000 | Beverages    | Aux joyeux ecclsiastiques |
+|   10360 | Cte de Blaye |  210.8000 |       10 |  2108.0000 | Beverages    | Aux joyeux ecclsiastiques |
+|   10372 | Cte de Blaye |  210.8000 |       40 |  8432.0000 | Beverages    | Aux joyeux ecclsiastiques |
+|   10417 | Cte de Blaye |  210.8000 |       50 | 10540.0000 | Beverages    | Aux joyeux ecclsiastiques |
+|   10424 | Cte de Blaye |  210.8000 |       49 | 10329.2000 | Beverages    | Aux joyeux ecclsiastiques |
+|   10479 | Cte de Blaye |  210.8000 |       30 |  6324.0000 | Beverages    | Aux joyeux ecclsiastiques |
+|   10518 | Cte de Blaye |  263.5000 |       15 |  3952.5000 | Beverages    | Aux joyeux ecclsiastiques |
+|   10540 | Cte de Blaye |  263.5000 |       30 |  7905.0000 | Beverages    | Aux joyeux ecclsiastiques |
+|   10541 | Cte de Blaye |  263.5000 |        4 |  1054.0000 | Beverages    | Aux joyeux ecclsiastiques |
+|   10616 | Cte de Blaye |  263.5000 |       15 |  3952.5000 | Beverages    | Aux joyeux ecclsiastiques |
+|   10672 | Cte de Blaye |  263.5000 |       15 |  3952.5000 | Beverages    | Aux joyeux ecclsiastiques |
+|   10783 | Cte de Blaye |  263.5000 |        5 |  1317.5000 | Beverages    | Aux joyeux ecclsiastiques |
+|   10805 | Cte de Blaye |  263.5000 |       10 |  2635.0000 | Beverages    | Aux joyeux ecclsiastiques |
+|   10816 | Cte de Blaye |  263.5000 |       30 |  7905.0000 | Beverages    | Aux joyeux ecclsiastiques |
+|   10817 | Cte de Blaye |  263.5000 |       30 |  7905.0000 | Beverages    | Aux joyeux ecclsiastiques |
+|   10828 | Cte de Blaye |  263.5000 |        2 |   527.0000 | Beverages    | Aux joyeux ecclsiastiques |
+|   10831 | Cte de Blaye |  263.5000 |        8 |  2108.0000 | Beverages    | Aux joyeux ecclsiastiques |
+|   10865 | Cte de Blaye |  263.5000 |       60 | 15810.0000 | Beverages    | Aux joyeux ecclsiastiques |
++---------+--------------+-----------+----------+------------+--------------+---------------------------+
+20 rows in set (0.0005 sec)
+
+ MySQL  localhost:3306  northwind  SQL >
