@@ -1,0 +1,121 @@
+No. 1
+
+ MySQL  localhost:3306  northwind  SQL > select a.orderid,c.companyname, sum(a.unitprice*a.quantity) as Total from orderdetails a inner join orders b on a.orderid=b.orderid inner join customers c on c.customerid=b.customerid group by c.companyname order by sum(a.unitprice*a.quantity) desc limit 1;
++---------+-------------+-------------+
+| orderid | companyname | Total       |
++---------+-------------+-------------+
+|   10273 | QUICK-Stop  | 117483.3900 |
++---------+-------------+-------------+
+1 row in set (0.0041 sec)
+
+
+No. 2
+
+ MySQL  localhost:3306  northwind  SQL > select a.orderid,c.companyname, sum(a.unitprice*a.quantity) as Total from orderdetails a inner join orders b on a.orderid=b.orderid inner join customers c on c.customerid=b.customerid group by c.companyname order by sum(a.unitprice*a.quantity) limit 1;
++---------+----------------------------+----------+
+| orderid | companyname                | Total    |
++---------+----------------------------+----------+
+|   10259 | Centro comercial Moctezuma | 100.8000 |
++---------+----------------------------+----------+
+1 row in set (0.0044 sec)
+
+
+No. 3
+
+ MySQL  localhost:3306  northwind  SQL > select a.productname,sum(b.quantity) as Cantidad from products a inner join orderdetails b on a.productid=b.productid group by a.productname order by Cantidad desc limit 1;
++-------------------+----------+
+| productname       | Cantidad |
++-------------------+----------+
+| Camembert Pierrot |     1577 |
++-------------------+----------+
+1 row in set (0.0223 sec)
+
+
+No. 4
+
+ MySQL  localhost:3306  northwind  SQL > select productname, min(unitprice) from products group by productname order by min(unitprice) desc limit 1;
++--------------+----------------+
+| productname  | min(unitprice) |
++--------------+----------------+
+| Cte de Blaye |       263.5000 |
++--------------+----------------+
+1 row in set (0.0007 sec)
+
+
+No. 5
+
+ MySQL  localhost:3306  northwind  SQL > select productname, min(unitprice) from products group by productname order by min(unitprice) limit 1;
++-------------+----------------+
+| productname | min(unitprice) |
++-------------+----------------+
+| Geitost     |         2.5000 |
++-------------+----------------+
+1 row in set (0.0007 sec)
+
+
+No. 6
+
+ MySQL  localhost:3306  northwind  SQL > select a.companyname, count(b.orderid) as compra, c.productname, sum(d.quantity) as cantidad from customers a
+                                     ... inner join orders b on a.customerid=b.customerid
+                                     ... inner join orderdetails d on b.orderid=d.orderid
+                                     ... inner join products c on c.productid=d.productid
+                                     ... group by a.companyname order by compra desc limit 1;
++--------------------+--------+-------------+----------+
+| companyname        | compra | productname | cantidad |
++--------------------+--------+-------------+----------+
+| Save-a-lot Markets |    116 | Pavlova     |     4958 |
++--------------------+--------+-------------+----------+
+1 row in set (0.0058 sec)
+
+
+No. 7
+
+ MySQL  localhost:3306  northwind  SQL > select a.firstname, a.lastname, count(b.orderid) as Venta from employees a inner join orders b on a.employeeid=b.employeeid group by a.lastname order by Venta desc limit 1;
++-----------+----------+-------+
+| firstname | lastname | Venta |
++-----------+----------+-------+
+| Margaret  | Peacock  |   156 |
++-----------+----------+-------+
+1 row in set (0.0008 sec)
+
+
+No. 8
+
+ MySQL  localhost:3306  northwind  SQL > select a.firstname, a.lastname, count(b.orderid) as Venta from employees a inner join orders b on a.employeeid=b.employeeid group by a.lastname order by Venta limit 1;
++-----------+----------+-------+
+| firstname | lastname | Venta |
++-----------+----------+-------+
+| Steven    | Buchanan |    42 |
++-----------+----------+-------+
+1 row in set (0.0008 sec)
+
+
+No. 9
+
+MySQL  localhost:3306  northwind  SQL > select a.companyname, b.unitsonorder,b.unitsinstock from suppliers a inner join products b on a.supplierid=b.supplierid where b.unitsonorder<15 and b.unitsinstock<15 group by a.companyname order by unitsonorder;
++----------------------------------------+--------------+--------------+
+| companyname                            | unitsonorder | unitsinstock |
++----------------------------------------+--------------+--------------+
+| Formaggi Fortini s.r.l.                |            0 |           14 |
+| Plutzer Lebensmittelgromrkte AG        |            0 |            0 |
+| G'day, Mate                            |            0 |            0 |
+| Grandma Kelly's Homestead              |            0 |            6 |
+| New Orleans Cajun Delights             |            0 |            0 |
+| Nord-Ost-Fisch Handelsgesellschaft mbH |            0 |           10 |
+| Pavlova, Ltd.                          |            0 |            0 |
+| Specialty Biscuits, Ltd.               |           10 |            6 |
++----------------------------------------+--------------+--------------+
+8 rows in set (0.0007 sec)
+
+
+No. 10
+
+ MySQL  localhost:3306  northwind  SQL > select a.companyname,sum(b.unitsonorder*b.unitprice) as dinero from suppliers a inner join products b on a.supplierid=b.supplierid group by a.companyname order by dinero desc limit 1;
++---------------------------------+-----------+
+| companyname                     | dinero    |
++---------------------------------+-----------+
+| Plutzer Lebensmittelgromrkte AG | 2660.0000 |
++---------------------------------+-----------+
+1 row in set (0.0007 sec)
+
+
